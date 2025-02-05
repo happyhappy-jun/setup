@@ -35,6 +35,24 @@ if [[ -f "$HOME/.env" ]]; then
     load_env
 fi
 
+if [[ -n "${GITHUB_TOKEN}" ]]; then
+    # Set credential helper to store
+    git config --global credential.helper store
+    
+    # Create or update .git-credentials
+    local credentials_file="${HOME}/.git-credentials"
+    local github_line="https://${GITHUB_USERNAME:-$(git config user.email)}:${GITHUB_TOKEN}@github.com"
+    
+    # Remove existing GitHub entry if present
+    if [[ -f "$credentials_file" ]]; then
+        sed -i '/github.com/d' "$credentials_file"
+    fi
+    
+    # Add new credentials
+    echo "$github_line" >> "$credentials_file"
+    chmod 600 "$credentials_file"  
+fi
+
 # Miniconda installation check and setup
 if [ ! -d "$HOME/miniconda3" ]; then
     echo "Miniconda not found. Installing..."
