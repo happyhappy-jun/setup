@@ -111,6 +111,7 @@ zi ice wait lucid from"gh-r" as"program" sbin"*/bat"
 zi light sharkdp/bat
 
 zinit light zsh-users/zsh-autosuggestions
+bindkey '^a' autosuggest-accept
 zinit light zdharma-continuum/fast-syntax-highlighting
 zinit light zdharma-continuum/history-search-multi-word
 
